@@ -30,7 +30,17 @@ todo-app-monorepo/
 pnpm install
 ```
 
-2. Start both frontend and backend in development mode:
+2. Set up environment variables:
+
+```bash
+# Copy environment files
+cp packages/backend/env.example packages/backend/.env
+cp packages/frontend/env.example packages/frontend/.env
+
+# Edit the files with your configuration
+```
+
+3. Start both frontend and backend in development mode:
 
 ```bash
 pnpm dev
@@ -117,19 +127,43 @@ Both packages use TypeScript with strict configuration. The backend uses `tsx` f
 
 ### Environment Variables
 
-Create `.env` files in each package directory as needed:
+Create `.env` files in each package directory:
+
+**Backend (`packages/backend/.env`):**
 
 ```bash
-# packages/backend/.env
+# Database URL (required)
 DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@db.[YOUR-PROJECT-REF].supabase.co:5432/postgres"
+
+# Server port (optional, defaults to 3000)
 PORT=3000
 ```
+
+**Frontend (`packages/frontend/.env`):**
+
+```bash
+# Backend API URL (optional, defaults to http://localhost:3000)
+VITE_API_URL=http://localhost:3000
+```
+
+**Important Notes:**
+
+- Frontend environment variables must be prefixed with `VITE_` to be accessible in the browser
+- The backend URL in the frontend `.env` should match your backend server address
+- For production, update `VITE_API_URL` to your deployed backend URL
 
 ## 🚀 Deployment
 
 ### Frontend
 
 The frontend builds to `packages/frontend/dist/` and can be deployed to any static hosting service.
+
+**Production Environment Setup:**
+
+```bash
+# Set the production backend URL
+VITE_API_URL=https://your-backend-domain.com
+```
 
 ### Backend
 
@@ -141,6 +175,16 @@ pnpm --filter backend build
 
 # Start production server
 pnpm --filter backend start
+```
+
+**Production Environment Setup:**
+
+```bash
+# Required: Set your production database URL
+DATABASE_URL="postgresql://..."
+
+# Optional: Set production port
+PORT=3000
 ```
 
 ## 📝 Features
