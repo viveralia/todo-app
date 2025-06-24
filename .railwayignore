@@ -1,0 +1,19 @@
+# Frontend files
+packages/frontend/
+packages/frontend/dist/
+
+# Development files
+node_modules/
+.git/
+.gitignore
+README.md
+*.log
+
+# Build artifacts (except backend)
+dist/
+.turbo/
+
+# Environment files
+.env
+.env.local
+.env.*.local 
